@@ -4,10 +4,11 @@
 
 /* ── Scroll-reveal via IntersectionObserver ── */
 (function initReveal() {
-  // Add .reveal to every major section child that isn't already .fade-up
   const targets = document.querySelectorAll(
-    '.stats-inner, .system-grid, .sys-card, .pricing-card, ' +
-    '.who-grid, .about-inner, .cta-inner, ' +
+    '.stats-inner, .problem-grid, .problem-card, .system-grid, .sys-card, ' +
+    '.steps-grid, .step-card, .who-grid, .who-tag, .results-grid, .result-card, ' +
+    '.pricing-card, .why-grid, .why-card, .guarantee-box, ' +
+    '.about-inner, .cta-inner, ' +
     '.section-label, .section-title, .section-sub'
   );
 
@@ -22,7 +23,7 @@
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
-          observer.unobserve(entry.target); // animate only once
+          observer.unobserve(entry.target);
         }
       });
     },
@@ -33,7 +34,7 @@
 })();
 
 
-/* ── Nav: add shadow + slight bg on scroll ── */
+/* ── Nav: add shadow + bg on scroll ── */
 (function initNav() {
   const nav = document.querySelector('nav');
   if (!nav) return;
@@ -69,7 +70,6 @@
   const stats = document.querySelectorAll('.stat-number');
 
   const parseValue = (text) => {
-    // Extract numeric part, preserve prefix/suffix symbols
     const match = text.match(/([^0-9]*)(\d+)([^0-9]*)/);
     if (!match) return null;
     return { prefix: match[1], value: parseInt(match[2], 10), suffix: match[3] };
@@ -80,7 +80,6 @@
     const step = (now) => {
       const elapsed = now - start;
       const progress = Math.min(elapsed / duration, 1);
-      // Ease-out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
       const current = Math.round(eased * target);
       el.textContent = `${prefix}${current}${suffix}`;
